@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use App\Models\Category;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -48,7 +49,8 @@ class PostForm
                                     'required' => 'Silakan pilih Kategori untuk Post ini.',
                                 ])
                                 ->relationship('category', 'name')
-                                ->preload()
+                                ->options(Category::all()->pluck('name', 'id'))
+                                // ->preload()
                                 ->searchable(),
                             ColorPicker::make('color'),
                         ])->columns(2),
