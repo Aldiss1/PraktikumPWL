@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\Products\Schemas;
 
-use Filament\Infolists\Components\IconEntry;
-use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Schemas\Schema;
 
 class ProductInfolist
@@ -14,6 +14,7 @@ class ProductInfolist
     {
         return $schema
             ->components([
+                //
                 Section::make('Product Info')
                     ->description('')
                     ->schema([
@@ -26,7 +27,7 @@ class ProductInfolist
                         TextEntry::make('sku')
                             ->label('Product SKU')
                             ->badge()
-                            ->color('success'),
+                            ->color('warning'),
                         TextEntry::make('description')
                             ->label('Product Description'),
                         TextEntry::make('created_at')
@@ -42,9 +43,11 @@ class ProductInfolist
                             ->label('Product Price')
                             ->weight('bold')
                             ->color('primary')
-                            ->icon('heroicon-s-currency-dollar'),
+                            ->icon('heroicon-s-currency-dollar')
+                            ->formatStateUsing(fn ($state) => 'Rp ' . number_format((float) $state, 0, ',', '.')),
                         TextEntry::make('stock')
-                            ->label('Product Stock'),
+                            ->label('Product Stock')
+                            ->icon('heroicon-s-cube'),
                     ])
                     ->columnSpanFull(),
                 Section::make('Image and Status')
@@ -57,11 +60,13 @@ class ProductInfolist
                             ->label('Product Price')
                             ->weight('bold')
                             ->color('primary')
-                            ->icon('heroicon-s-currency-dollar'),
+                            ->icon('heroicon-s-currency-dollar')
+                            ->formatStateUsing(fn ($state) => 'Rp ' . number_format((float) $state, 0, ',', '.')),
                         TextEntry::make('stock')
                             ->label('Product Stock')
                             ->weight('bold')
-                            ->color('primary'),
+                            ->color('primary')
+                            ->icon('heroicon-s-cube'),
                         IconEntry::make('is_active')
                             ->label('Is Active?')
                             ->boolean(),
